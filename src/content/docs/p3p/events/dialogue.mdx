@@ -1,0 +1,61 @@
+---
+title: Dialogue
+description: Learn how to write/edit event dialogue in Persona 3 Portable (PC).
+sidebar:
+    order: 3
+prev: false
+next: false
+---
+
+:::caution
+These docs are under construction.
+
+TODO:
+
+* Write documentation for creating a .msg file and all messages/sels within
+* Write documentation for editing a .msg via hooking
+* Write documentation for creating/editing a .flow
+* Move anything not truly event specific into it's own "Flowscript" category?
+:::
+
+## Adding expression icons
+In events, you can trigger an "expression" icon that will play an animation attached to a displayed bustup. These icons are as follows:
+:::caution
+TODO:
+
+* Write better descriptions
+* Add better images (texture rips?)
+  * Use gifs/apng/animated webp to actually show the animation?
+:::
+| ID | Description | Image |
+|-|-|-|
+|01|Exclamation mark|![](../../../../assets/p3p/events/bustup_icons/icon_01.png)
+|02|Two exclamation marks|![](../../../../assets/p3p/events/bustup_icons/icon_02.png)
+|03|Question mark|![](../../../../assets/p3p/events/bustup_icons/icon_03.png)
+|04|Interrobang|![](../../../../assets/p3p/events/bustup_icons/icon_04.png)
+|05|Anger veins|![](../../../../assets/p3p/events/bustup_icons/icon_05.png)
+|06|Flowers|![](../../../../assets/p3p/events/bustup_icons/icon_06.png)
+|07|Music note|![](../../../../assets/p3p/events/bustup_icons/icon_07.png)
+|08|Impact?|![](../../../../assets/p3p/events/bustup_icons/icon_08.png)
+|09|Frusturation dust cloud|![](../../../../assets/p3p/events/bustup_icons/icon_09.png)
+|10|Blush|![](../../../../assets/p3p/events/bustup_icons/icon_10.png)
+|11|Speaking lines?|![](../../../../assets/p3p/events/bustup_icons/icon_11.png)
+|12|Annoyed lightning bolts?|![](../../../../assets/p3p/events/bustup_icons/icon_12.png)
+|13|Heart|![](../../../../assets/p3p/events/bustup_icons/icon_13.png)
+|14|Sleeping Z's|![](../../../../assets/p3p/events/bustup_icons/icon_14.png)
+|15|PiPiPi phone ringing|![](../../../../assets/p3p/events/bustup_icons/icon_15.png)
+|16|Two sweatdrops, one big one small|![](../../../../assets/p3p/events/bustup_icons/icon_16.png)
+|17|Four sweatdrops|![](../../../../assets/p3p/events/bustup_icons/icon_17.png)
+|18|White spiked bubble thing?|![](../../../../assets/p3p/events/bustup_icons/icon_18.png)
+|19|Music note with particles|![](../../../../assets/p3p/events/bustup_icons/icon_19.png)
+|20|Two music notes with particles|![](../../../../assets/p3p/events/bustup_icons/icon_20.png)
+|21|Three music notes with particles|![](../../../../assets/p3p/events/bustup_icons/icon_21.png)
+|22|Green music note with particles|![](../../../../assets/p3p/events/bustup_icons/icon_22.png)
+
+To add one to a message, add `[f 6 1 1 0 x y]` into your message, where `x` equals the character id you want to play the icon over, and `y` is the id of the icon you want to play.
+
+As an example:
+```
+[s][bup 6 1 3 1][f 6 1 1 0 6 3]Huh?[w][e]
+```
+Would result in a message box using Fuuka's winter outfit "default" emotion bustup playing expression `3` on it.

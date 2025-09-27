@@ -95,6 +95,12 @@ export default defineConfig({
                   directory: "p3p/audio/",
                 },
               },
+              {
+                label: "Event Modding",
+                autogenerate: {
+                  directory: "p3p/events/"
+                },
+              },
             ],
           },
           {

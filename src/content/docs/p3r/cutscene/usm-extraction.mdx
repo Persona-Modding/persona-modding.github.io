@@ -1,0 +1,36 @@
+---
+title: Cutscene Extraction
+description: Learn how to extract cutscenes from Persona 3 Reload (PC).
+sidebar:
+    order: 1
+---
+
+import { Aside, Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Aside type="caution">
+  These docs are under construction so this page is still a W.I.P
+</Aside>
+
+## Tools you'll need
+- [VGMToolbox](https://sourceforge.net/projects/vgmtoolbox/)
+- [FFMPEG](https://ffmpeg.org/download.html)
+
+## Extracting a USM
+1. Using the [Amicitia Wiki](https://amicitia.miraheze.org/wiki/Persona_3_Reload) find and export the file you want to extract.
+<Aside>
+All USMs are found under P3R/Content/Xrd777/CriData/Stream/Movie
+</Aside>
+
+2. Now that you have the USM you need, open VGMToolbox and go to:
+```mdx
+Misc. Tools > Stream Tools > Video Demultiplexer
+```
+3. Select "USM (CRI Movie 2)" in the Format box. 
+4. Then simply drag and drop your USM files you wish VGMToolbox and they will automatically begin to be extracted. The final result will be two separate file types:
+```mdx
+M2V (which only contains video).
+ADX or HCA (which only contains audio).
+```
+<Aside>
+In some cases, M2V files may appear pixelated, though this can be corrected with FFMpeg.
+</Aside>

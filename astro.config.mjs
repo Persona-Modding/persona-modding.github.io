@@ -116,6 +116,12 @@ export default defineConfig({
                       directory: "p3r/getting-started/making-mods/",
                     },
                   },
+                  {
+                    label: "Cutscene Modding",
+                    autogenerate: {
+                      directory: "p3r/cutscene/",
+                    },
+                  },
                 ],
               },
             ],

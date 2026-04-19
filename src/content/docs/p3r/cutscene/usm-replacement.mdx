@@ -1,0 +1,438 @@
+---
+title: Cutscene Replacement
+description: Learn how to replace cutscenes in Persona 3 Reload (PC).
+sidebar:
+    order: 2
+---
+
+import { Aside, Tabs, TabItem } from "@astrojs/starlight/components";
+
+<Aside type="caution">
+  These docs are under construction as adding in cuepoints is still relatively new. TODO: - update docs to show how to add new cuepoints -
+</Aside>
+<Aside>
+This guide covers 2D animated cutscenes and 3D pre-rendered cutscenes, such as the rooftop awakening and the intro sequence.
+
+It does not apply to in-engine cutscenes, such as the one where Aigis stares out at the ocean before turning towards the camera. A simple way to tell if a cutscene is in-engine is to modify a character model—if your changes appear in the scene, it’s rendered in-engine.
+</Aside>
+
+## Tools You'll Need
+
+- [Scaleform Tool](https://www.mediafire.com/file/6acalge6xd1vn2e/Scaleform_VideoEncoder.zip/file/)
+- [VGMToolbox](https://sourceforge.net/projects/vgmtoolbox/)
+- [FFMPEG](https://ffmpeg.org/download.html)
+
+## Finding the cuepoints file
+1. Using the [Amicitia Wiki](https://amicitia.miraheze.org/wiki/Persona_3_Reload) find the file you want to modify.
+2. Open FModel and navigate to P3R/Content/Xrd777/Movies/MediaFrameWork/MediaPlayerMovieSource_VP9.
+3. Now depending on the category of the movie you want to modify you will either open the Anim or Event folder 
+4. After opening the folder you need, search for a file that matches the name of the USM you want to modify. For this tutorial it will be MS_Event_main_100_285_A_Movi_VP9.uasset.
+5. Now double click the file to see a preview of it in fmodel, it should look something like this.
+
+![](../../../../assets/p3r/cutscene/cuepoint_preview.webp)
+
+## Replicating the cuepoints
+1. Now we will be replicating the cuepoints in the USM by analysing the json in fmodel. Below you'll find a copy of the json we're gonna be replicating.
+```json
+[
+  {
+    "Type": "FileManaMovie",
+    "Name": "MS_Event_main_100_285_A_Movi_VP9",
+    "Class": "UScriptClass'FileManaMovie'",
+    "Flags": "RF_Public | RF_Standalone | RF_Transactional | RF_WasLoaded | RF_LoadCompleted",
+    "Properties": {
+      "FilePath": "Movie_VP9/Event/MS_Event_main_100_285_A_Movi_VP9.usm",
+      "VideoTracks": [
+        {
+          "TextureDimensions": {
+            "X": 1920,
+            "Y": 1080
+          },
+          "DisplayDimensions": {
+            "X": 1920,
+            "Y": 1080
+          },
+          "FrameRate": 30.000002,
+          "TotalFrames": 6455,
+          "bIsAlpha": false,
+          "Type": "EManaMovieType::VP9"
+        }
+      ],
+      "EventPoints": [
+        {
+          "Name": "start",
+          "Time": 0.0,
+          "Type": 9999,
+          "Parameter": ""
+        },
+        {
+          "Name": "BmdLoad",
+          "Time": 0.0,
+          "Type": 1,
+          "Parameter": "/Game/Xrd777/Events/Cinema/Event_Main_100_285_A/BMD_Event_Main_100_285_A.BMD_Event_Main_100_285_A,"
+        },
+        {
+          "Name": "AcbLoad",
+          "Time": 0.0,
+          "Type": 2,
+          "Parameter": "/Game/Xrd777/CriData/CueSheet/Event/Se_Event_Main_100_285_A.Se_Event_Main_100_285_A,"
+        },
+        {
+          "Name": "ボイス",
+          "Time": 0.033,
+          "Type": 1003,
+          "Parameter": "0,1,"
+        },
+        {
+          "Name": "SE",
+          "Time": 0.033,
+          "Type": 1003,
+          "Parameter": "14,2,"
+        },
+        {
+          "Name": "BGM",
+          "Time": 10.0,
+          "Type": 1003,
+          "Parameter": "26,0,"
+        },
+        {
+          "Name": "ボイス",
+          "Time": 12.167,
+          "Type": 1003,
+          "Parameter": "1,1,"
+        },
+        {
+          "Name": "ゆかり台詞01",
+          "Time": 12.2,
+          "Type": 1002,
+          "Parameter": "MSG_000_0_0,0,29,"
+        },
+        {
+          "Name": "SE",
+          "Time": 13.1,
+          "Type": 1003,
+          "Parameter": "15,2,"
+        },
+        {
+          "Name": "SE",
+          "Time": 27.2,
+          "Type": 1003,
+          "Parameter": "2,1,"
+        },
+        {
+          "Name": "ゆかり台詞02",
+          "Time": 28.6,
+          "Type": 1002,
+          "Parameter": "MSG_001_0_0,0,87,"
+        },
+        {
+          "Name": "SE",
+          "Time": 31.067,
+          "Type": 1003,
+          "Parameter": "16,2,"
+        },
+        {
+          "Name": "ゆかり台詞03",
+          "Time": 32.2,
+          "Type": 1002,
+          "Parameter": "MSG_001_5_0,0,35,"
+        },
+        {
+          "Name": "SE",
+          "Time": 35.6,
+          "Type": 1003,
+          "Parameter": "17,2,"
+        },
+        {
+          "Name": "SE",
+          "Time": 38.467,
+          "Type": 1003,
+          "Parameter": "18,2,"
+        },
+        {
+          "Name": "SE",
+          "Time": 43.2,
+          "Type": 1003,
+          "Parameter": "19,2,"
+        },
+        {
+          "Name": "SE",
+          "Time": 48.7,
+          "Type": 1003,
+          "Parameter": "20,2,"
+        },
+        {
+          "Name": "ボイス",
+          "Time": 55.6,
+          "Type": 1003,
+          "Parameter": "3,1,"
+        },
+        {
+          "Name": "SE",
+          "Time": 57.767,
+          "Type": 1003,
+          "Parameter": "21,2,"
+        },
+        {
+          "Name": "ボイス",
+          "Time": 60.4,
+          "Type": 1003,
+          "Parameter": "4,1,"
+        },
+        {
+          "Name": "真田台詞01",
+          "Time": 60.4,
+          "Type": 1002,
+          "Parameter": "MSG_003_0_0,0,23,"
+        },
+        {
+          "Name": "幾月台詞01",
+          "Time": 63.1,
+          "Type": 1002,
+          "Parameter": "MSG_004_0_0,0,23,"
+        },
+        {
+          "Name": "ボイス",
+          "Time": 69.9,
+          "Type": 1003,
+          "Parameter": "5,1,"
+        },
+        {
+          "Name": "ファルロス台詞01",
+          "Time": 84.0,
+          "Type": 1002,
+          "Parameter": "MSG_002_0_0,0,41,"
+        },
+        {
+          "Name": "ボイス",
+          "Time": 84.2,
+          "Type": 1003,
+          "Parameter": "6,1,"
+        },
+        {
+          "Name": "ボイス",
+          "Time": 91.8,
+          "Type": 1003,
+          "Parameter": "7,1,"
+        },
+        {
+          "Name": "主人公台詞01",
+          "Time": 91.933,
+          "Type": 1002,
+          "Parameter": "MSG_005_0_0,0,15,"
+        },
+        {
+          "Name": "主人公台詞02",
+          "Time": 92.8,
+          "Type": 1002,
+          "Parameter": "MSG_005_5_0,0,31,"
+        },
+        {
+          "Name": "主人公台詞03",
+          "Time": 93.833,
+          "Type": 1002,
+          "Parameter": "MSG_005_7_0,0,53,"
+        },
+        {
+          "Name": "SE",
+          "Time": 94.8,
+          "Type": 1003,
+          "Parameter": "22,2,"
+        },
+        {
+          "Name": "BGM",
+          "Time": 95.0,
+          "Type": 1003,
+          "Parameter": "27,0,"
+        },
+        {
+          "Name": "オルフェウス台詞01",
+          "Time": 103.2,
+          "Type": 1002,
+          "Parameter": "MSG_006_0_0,0,140,"
+        },
+        {
+          "Name": "ボイス",
+          "Time": 103.3,
+          "Type": 1003,
+          "Parameter": "8,1,"
+        },
+        {
+          "Name": "オルフェウス台詞02",
+          "Time": 109.033,
+          "Type": 1002,
+          "Parameter": "MSG_006_5_0,0,121,"
+        },
+        {
+          "Name": "オルフェウス台詞03",
+          "Time": 113.2,
+          "Type": 1002,
+          "Parameter": "MSG_006_7_0,0,202,"
+        },
+        {
+          "Name": "ボイス",
+          "Time": 127.5,
+          "Type": 1003,
+          "Parameter": "9,1,"
+        },
+        {
+          "Name": "美鶴台詞01",
+          "Time": 130.867,
+          "Type": 1002,
+          "Parameter": "MSG_007_0_0,0,37,"
+        },
+        {
+          "Name": "ボイス",
+          "Time": 146.5,
+          "Type": 1003,
+          "Parameter": "10,1,"
+        },
+        {
+          "Name": "主人公台詞04",
+          "Time": 146.5,
+          "Type": 1002,
+          "Parameter": "MSG_008_0_0,0,115,"
+        },
+        {
+          "Name": "SE",
+          "Time": 149.967,
+          "Type": 1003,
+          "Parameter": "23,2,"
+        },
+        {
+          "Name": "ボイス",
+          "Time": 164.5,
+          "Type": 1003,
+          "Parameter": "11,1,"
+        },
+        {
+          "Name": "SE",
+          "Time": 165.333,
+          "Type": 1003,
+          "Parameter": "24,2,"
+        },
+        {
+          "Name": "ボイス",
+          "Time": 184.6,
+          "Type": 1003,
+          "Parameter": "12,1,"
+        },
+        {
+          "Name": "ボイス",
+          "Time": 198.7,
+          "Type": 1003,
+          "Parameter": "13,1,"
+        },
+        {
+          "Name": "SE",
+          "Time": 200.133,
+          "Type": 1003,
+          "Parameter": "25,2,"
+        }
+      ]
+    }
+  }
+]
+```
+2. Now what we need to look for is the EventPoints list in the json, where each entry is an individual cuepoint. Now we will begin replicating the cuepoints in a text file named cue.txt (you may name the file anything you want)
+3. Now copy the below items and paste them into the text file.
+```mdx
+;Time, Value, EventPointName, String
+1000
+```
+4. Now each line we add to this file will be an individual cuepoint with the general format shown below.
+```mdx
+Time (ms) | Type | Name | Parameter
+```
+So for example, if we see this eventpoint in the json we opened in fmodel earlier:
+```mdx
+{
+          "Name": "ゆかり台詞01",
+          "Time": 12.2,
+          "Type": 1002,
+          "Parameter": "MSG_000_0_0,0,29,"
+}
+```
+Then we will replicate it in the text file as follows:
+```mdx
+1220,1002,ゆかり台詞01,MSG_000_0_0,0,29,
+```
+<Aside>
+The time in the json is in seconds but the time in the cuepoints text file (cue.txt) is in milliseconds so you need to multiply the time value in the Fmodel json by 1000.
+</Aside>
+
+5. So for the file MS_Event_main_100_285_A_Movi_VP9.uasset, all the cuepoints will be replicated as shown below.
+```mdx
+;Time, Value, EventPointName, String
+1000
+0,9999,start
+0,1,BmdLoad,/Game/Xrd777/Events/Cinema/Event_Main_100_285_A/BMD_Event_Main_100_285_A.BMD_Event_Main_100_285_A,
+0,1,AcbLoad,/Game/Xrd777/CriData/CueSheet/Event/Se_Event_Main_100_285_A.Se_Event_Main_100_285_A,
+33,1003,ボイス,0,1,
+33,1003,SE,14,2,
+10000,1003,BGM,26,0,
+12167,1003,ボイス,1,1
+12200,1002,ゆかり台詞01,MSG_000_0_0,0,29,
+13100,1003,SE,15,2,
+27200,1003,SE,2,1,
+28600,1002,ゆかり台詞02,MSG_001_0_0,0,87,
+31067,1003,SE,16,2,
+32200,1002,ゆかり台詞03,MSG_001_5_0,0,35,
+35600,1003,SE,17,2,
+38467,1003,SE,18,2,
+43200,1003,SE,19,2,
+48700,1003,SE,20,2,
+55600,1003,ボイス,3,1,
+57767,1003,SE,21,2,
+60400,1003,ボイス,4,1,
+60400,1002,真田台詞01,MSG_003_0_0,0,23,
+63100,1002,幾月台詞01,MSG_004_0_0,0,23,
+69900,1003,ボイス,5,1,
+84000,1002,ファルロス台詞01,MSG_002_0_0,0,41,
+84200,1003,ボイス,6,1,
+91800,1003,ボイス,7,1,
+91933,1002,主人公台詞01,MSG_005_0_0,0,15,
+92800,1002,主人公台詞02,MSG_005_5_0,0,31,
+93833,1002,主人公台詞03,MSG_005_7_0,0,53,
+94800,1003,SE,22,2,
+95000,1003,BGM,27,0,
+103200,1002,オルフェウス台詞01,MSG_006_0_0,0,140,
+103300,1003,ボイス,8,1,
+109033,1002,オルフェウス台詞02,MSG_006_5_0,0,121,
+113200,1002,オルフェウス台詞03,MSG_006_7_0,0,202,
+127500,1003,ボイス,9,1,
+130867,1002,美鶴台詞01,MSG_007_0_0,0,37,
+146500,1003,ボイス,10,1,
+146500,1002,主人公台詞04,MSG_008_0_0,0,115,
+149967,1003,SE,23,2,
+164500,1003,ボイス,11,1,
+165333,1003,SE,24,2,
+184600,1003,ボイス,12,1,
+198700,1003,ボイス,13,1,
+200133,1003,SE,25,2,
+```
+
+## Encoding the USM
+1. Now that we have our cuepoint text file ready, we will need a video source and an audio source (if you are not encoding a pre-rendered/event USM). Make sure the video source has the .avi extension and the audio has the .wav extension.
+2. Open Scaleform/Sofdec Encoder, and import the video source.
+3. Now for audio, make sure that the use audio checkbox next to video source is turned off. To add audio to your USM, you will need two different wav files, one for Japanese and one for English. Use the Other audio option below and select mono/stereo. Then add your japanese wav to track 0 and your english wav to track 1.
+
+<Aside>Skip step 3 if the USM does not support a built in audio track and uses cuepoints to call voicelines/BGM.</Aside>
+
+4. Now under the cuepoint file field add the path to your cuepoint text file. Your window should look like this.
+
+![](../../../../assets/p3r/cutscene/scaleform_preview.webp)
+
+<Aside> 
+After you are done with the previous step click on encode. This step might take a long time so have a cup of coffee while you wait.
+</Aside>
+
+5. After the USM is encoded, create a Reloaded mod and add a dependency on Ryo Framework (Don't forget to select P3R from the list of supported apps!). Then select your mod in Reloaded and click on open folder.
+6. Now in the folder that opens, create a folder named Ryo and inside the Ryo folder create a folder named P3R. Inside the P3R folder add the encoded USM. Make sure the USM is named the same as the original USM. For example: MS_Event_main_100_285_A_Movi_VP9.usm for the hero awakening USM.
+7. Now enable your newly created mod and try out the USM ingame.
+
+<Aside>
+Some useful info about movie IDs in P3R's mod menu
+1-20: Anim Movies
+60 and above: Event Movies
+</Aside>
